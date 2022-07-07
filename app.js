@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const DiffInDays = require('./dateDiff.js');
-mongoose.connect("mongodb://localhost:27017/userDB", { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect("mongodb+srv://skandertebo:galaxys41842002messi@cluster0.4a6gx.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
