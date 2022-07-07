@@ -52,10 +52,7 @@ const UserSchema = new mongoose.Schema({
 
 const User = new mongoose.model('User' , UserSchema);
 
-
-let user;
-app.get('/', (req, res)=>{
-    const userpwd = 'galaxy s41842002messi';
+const userpwd = 'galaxy s41842002messi';
 bcrypt.hash(userpwd, saltRounds, (err, hash) => {
     const user = new User({
         firstName:'skander',
@@ -81,6 +78,11 @@ bcrypt.hash(userpwd, saltRounds, (err, hash) => {
         }
     });
 });
+
+
+let user;
+app.get('/', (req, res)=>{
+    
     User.findOne((err , usr)=>{
         const nextDate = new Date(usr.months[usr.months.length-1].date.getFullYear() ,  usr.months[usr.months.length-1].date.getMonth() +1  , usr.months[usr.months.length-1].date.getDay());
         const daysRemaining = DiffInDays(usr.months[usr.months.length-1].date , nextDate);
