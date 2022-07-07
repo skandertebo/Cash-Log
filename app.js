@@ -53,7 +53,6 @@ const UserSchema = new mongoose.Schema({
 const User = new mongoose.model('User' , UserSchema);
 
 
-
 let user;
 app.get('/', (req, res)=>{
     User.findOne((err , usr)=>{
@@ -67,7 +66,7 @@ app.get('/', (req, res)=>{
                                   totalDeposits:usr.months[usr.months.length-1].totalDeposits });
     })
 });
-app.post('/' , (req, res)=>{
+app.post('/add-deposits' , (req, res)=>{
     let lastValue ;
     let i = 0;
     while(user.months[user.months.length-1].categories[i].categoryName!=req.body.categorySelect){
@@ -84,15 +83,37 @@ app.post('/' , (req, res)=>{
                     (err)=>{
                                 if(!err){
                                     console.log("updated succesfully");
+                                    res.redirect("/");
                                 }
                             
                                 else{
                                     console.log(err);
+                                    res.send("error");
                                 }
                             });
-    res.redirect('/');
                   
 });
+app.post('/' , (req, res)=>{
+    console.log(req.body);
+    User.updateOne({} , { $push : {
+                            "months.$[month].categories": { 
+                                                            categoryName:req.body.newCategory,
+                                                            CategoryDeposit:0
+                            },
+                            categories:req.body.newCategory
+                        }
+    },
+    {arrayFilters:[{'month.id' : 1}]},
+    (err)=>{
+        if(!err){
+            console.log("categories updated successfully");
+        }else{
+            console.log(err);
+        }
+    })
+})
+
+
 app.listen(3000, ()=>{
     console.log("listening on port 3000");
 });

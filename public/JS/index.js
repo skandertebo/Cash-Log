@@ -10,5 +10,7 @@ addCategoryBtn.addEventListener("click", ()=>{
     newCategoryInOverview.setAttribute("style","background:none;");
     newCategoryInOverview.textContent = document.getElementById("add-cat").value; +" : 0TND"
     document.getElementById('category-list-overview').appendChild(newCategoryInOverview);
-    document.getElementById("add-cat").value="";
+    document.getElementById('new-category').value = document.getElementById("add-cat").value ;
+    document.getElementById('addCategory').submit();
+    document.getElementById("add-cat").value = '';
 })
