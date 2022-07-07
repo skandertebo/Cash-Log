@@ -52,6 +52,61 @@ const UserSchema = new mongoose.Schema({
 
 const User = new mongoose.model('User' , UserSchema);
 
+const userpwd = 'galaxy s41842002messi';
+bcrypt.hash(userpwd, saltRounds, (err, hash) => {
+    const user = new User({
+        firstName:'skander',
+        lastName:'tebourbi',
+        email: 'alexandertebourb@gmail.com',
+        password:hash,
+        categories: ['food' , 'coffee' , 'Night outs' , 'electronics' , 'drugstore' , 'phone recharge'],
+        budget:200,
+        months:[
+            {
+                id:1,
+                date: new Date(),
+                totalDeposits:0,
+                categories:[]
+            }
+        ]
+    
+    });
+    console.log(user);
+    user.save((err)=>{
+        if(!err){
+            console.log("added user");
+        }
+    });
+});
+
+let categories = [];
+User.findOne((err , res)=>{
+    const monthId = res.months[res.months.length-1].id;
+    console.log(monthId);
+    console.log(res);
+    res.categories.forEach((el)=>{
+        categories.push({
+            categoryName:el,
+            CategoryDeposit:0
+        })
+    })
+    console.log(categories);
+    const update = {
+        $set:{"months.$.categories" : categories}
+    }
+    User.updateOne({months:{ $elemMatch:{id:monthId}}} , update , (err)=>{
+        if(!err){
+            console.log("succesfully updated");
+        }
+        else{
+            console.log(err);
+        }
+    })
+});
+
+
+
+
 
 
 
