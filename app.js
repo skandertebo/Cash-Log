@@ -53,37 +53,6 @@ const UserSchema = new mongoose.Schema({
 const User = new mongoose.model('User' , UserSchema);
 
 
-let categories = [];
-User.findOne((err , res)=>{
-    const monthId = res.months[res.months.length-1].id;
-    console.log(monthId);
-    console.log(res);
-    res.categories.forEach((el)=>{
-        categories.push({
-            categoryName:el,
-            CategoryDeposit:0
-        })
-    })
-    console.log(categories);
-    const update = {
-        $set:{"months.$.categories" : categories}
-    }
-    User.updateOne({months:{ $elemMatch:{id:monthId}}} , update , (err)=>{
-        if(!err){
-            console.log("succesfully updated");
-        }
-        else{
-            console.log(err);
-        }
-    })
-});
-
-
-
-
-
-
-
 let user;
 app.get('/', (req, res)=>{
     
