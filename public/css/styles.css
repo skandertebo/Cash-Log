@@ -286,6 +286,7 @@ input[type=radio]:checked {
         width:100%;
         position:static;
         padding:0px;
+        margin-bottom:var(--container-l-width);
     }
     .container-bottom{
         margin-top:1em;
