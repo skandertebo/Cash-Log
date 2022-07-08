@@ -102,7 +102,7 @@ app.get('/', homeMiddleware , (req, res)=>{
 
 app.post('/add-deposits' , (req, res)=>{
 
-    User.updateOne({"months.id" : {$gte : 1}},
+    User.updateOne({_id:req.session.user,"months.id" : {$gte : 1}},
                    {$inc:{"months.$.categories.$[category].CategoryDeposit":parseInt(req.body.deposit),
                           "months.$.totalDeposits":parseInt(req.body.deposit)
                         } 
@@ -122,7 +122,7 @@ app.post('/add-deposits' , (req, res)=>{
                   
 });
 app.post('/' , (req, res)=>{
-    User.updateOne({} , { $push : {
+    User.updateOne({_id:req.session.user} , { $push : {
                             "months.$[month].categories": { 
                                                             categoryName:req.body.newCategory,
                                                             CategoryDeposit:0
