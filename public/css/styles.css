@@ -275,7 +275,7 @@ input[type=radio]:checked {
 #total{
     font-weight: bold;
 }
-@media (max-width:501px) {
+@media only screen and (max-width:480px) {
     .container-l{
         height:var(--container-l-width);
         width:100%;
@@ -291,6 +291,9 @@ input[type=radio]:checked {
     .adding-spendings > form {
         padding-left:0.5rem;
         padding-right:0.5rem;
+    }
+    .add-cat{
+        gap:4px;
     }
 
 }

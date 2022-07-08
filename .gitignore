@@ -1,5 +1,6 @@
 someData.js
 config
+deploy.sh
 # Logs
 logs
 *.log
