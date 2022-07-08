@@ -275,7 +275,16 @@ input[type=radio]:checked {
 #total{
     font-weight: bold;
 }
-
+@media (max-width:500px) {
+    .container-l{
+        height:var(--container-l-width);
+        width:100%;
+        bottom:0;
+    }
+    .container-r{
+        width:100%;
+    }
+}
 
 @media (max-width: 600px){
     .container-bottom{
