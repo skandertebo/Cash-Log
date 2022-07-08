@@ -1,0 +1,30 @@
+<%- include('./partials/header.ejs') %>
+<div class="main-container">
+    <form action="register" method="post">
+    <div class="login-register-box purple-text container">
+        <h1 style="margin-bottom:0.8em;">Register</h1>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">First name</span>
+                <input autocomplete="off" type="text" class="form-control" placeholder="Insert your first name" aria-label="first name" aria-describedby="basic-addon1" name="firstName">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Last name</span>
+                <input autocomplete="off" type="text" class="form-control" placeholder="Insert your last name" aria-label="last name" aria-describedby="basic-addon1" name="lastName">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Email</span>
+                <input autocomplete="off" type="email" class="form-control" placeholder="Insert your Email" aria-label="email" aria-describedby="basic-addon1" name="email">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Password</span>
+                <input autocomplete="off" type="password" class="form-control" placeholder="Insert your password" aria-label="password" aria-describedby="basic-addon1" name="password">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Starting Budget</span>
+                <input autocomplete="off" type="number" class="form-control" placeholder="Insert your budget" aria-label="password" aria-describedby="basic-addon1" name="budget">
+            </div>
+            <button type="submit" class="btn btn-outline-danger mt-2">Sign-up</button>
+    </div>
+    </form>
+</div>
+<%- include('./partials/footer.ejs') %>

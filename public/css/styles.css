@@ -2,7 +2,74 @@
 :root{
     --container-l-width:4.5em;
     --purple:#541690;
+    --bg-primary:#FF4949;
+    --bg-secondary:#FFCD38;
+}
+body{
+    background-color:var(--bg-primary);
     font-family:'ubuntu' , sans-serif;
+}
+h1{
+    font-size:32px
+}
+.container{
+    background-color:var(--bg-secondary);
+    border-radius:10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color:#293462;
+}
+.container h1 , .container h2 {
+    font-family:'Montserrat' , sans-serif;
+    font-weight:900;
+}
+.main-container{
+    height:100vh;
+    width:100vw;
+    display:flex;
+    align-items: center;
+    justify-content:center;
+}
+.login-register-box{
+    background-color: var(--bg-secondary);
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:8px;
+    padding:2.7rem;
+    border-radius:5px;
+}
+.login-register-box button{
+    border-radius:10px;
+    font-size:18px;
+
+}
+.login-register-box h1 {
+    align-self:center;
+}
+.login-register-box .input-group {
+    border-radius: 16px;
+    box-shadow: 0px 0px 5px rgba(66,66,66,.75);
+    padding:2px;
+    height:2.5rem;
+    width:auto;
+}
+.login-register-box .input-group input {
+    background-color: rgba(255,255,255,0);
+    height:auto;
+    border:none;
+}
+.login-register-box .input-group input:focus {
+    background-color: rgba(255,255,255,0);
+    border:none;
+    box-shadow:none;
+}
+.login-register-box .input-group span {
+    background-color: rgba(255,255,255,0);
+    font-size:18px;
+    border:none;
 }
 .container-main{
     width:100%;
@@ -28,7 +95,6 @@
     flex-direction:column;
     position:absolute;
     left:var(--container-l-width);
-    background-color:#FF4949;
     align-items:center;
 }
 .main{
@@ -37,7 +103,7 @@
     display:flex;
     flex-direction:column;
     justify-content:center;
-    background-color:#FFCD38;
+    background-color:var(--bg-secondary);
     border-radius:30px;
     padding:5px;
     margin:6px;
@@ -50,10 +116,14 @@
     padding:3em;
     position: relative;
 }
-.container-bottom h2 {
+.purple-text{
+    color:#293462;
+}
+.purple-text h2 {
     font-size:20px;
     font-family:'Montserrat' , sans-serif;
     font-weight:900;
+    color:#293462;;
 }
 .container-bottom > .flex-item {
     align-self:start;
@@ -71,12 +141,6 @@
     -moz-box-shadow: 6px -1px 6px 0px rgba(82,52,52,0.53);
   }
 .adding-spendings{
-    background-color:#FFCD38;
-    border-radius:10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    color:#293462;
     margin:0.5rem;
     flex : 1 1 47%
 }
@@ -205,12 +269,6 @@ input[type=radio]:checked {
 
 .stats{
     padding:2rem;
-    background-color:#FFCD38;
-    border-radius:10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    color:#293462;
     margin:0.5rem;
     flex : 1 1 47%
 }

@@ -3,16 +3,32 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require("express-session");
+const mongodbSession = require('connect-mongodb-session')(session);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const DiffInDays = require('./dateDiff.js');
-mongoose.connect("mongodb+srv://skandertebo:galaxys41842002messi@cluster0.4a6gx.mongodb.net/?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
+const uri = "mongodb+srv://skandertebo:galaxys41842002messi@cluster0.4a6gx.mongodb.net/?retryWrites=true&w=majority"
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
 const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
+const store = new mongodbSession({
+    uri: uri,
+    collection: 'userSessions'
+});
+
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  store : store
+}))
 app.set('view engine', 'ejs');
 
 const UserSchema = new mongoose.Schema({
@@ -35,7 +51,7 @@ const UserSchema = new mongoose.Schema({
     },
     categories:[String],
     budget:{
-        type: String,
+        type: Number,
         required: true
     },
     months:[{
@@ -52,13 +68,29 @@ const UserSchema = new mongoose.Schema({
 
 const User = new mongoose.model('User' , UserSchema);
 
+const homeMiddleware = (req, res, next) => {
+    if(req.session.isAuth){
+        next();
+    }
+    else{
+        res.redirect("/login")
+    }
+}
 
-let user;
-app.get('/', (req, res)=>{
+const loginRegisterMiddleware = (req, res, next) => {
+    if(req.session.isAuth){
+        res.redirect("/");
+    }
+    else {
+        next();
+    }
+}
+
+app.get('/', homeMiddleware , (req, res)=>{
     
-    User.findOne((err , usr)=>{
-        const nextDate = new Date(usr.months[usr.months.length-1].date.getFullYear() ,  usr.months[usr.months.length-1].date.getMonth() +1  , usr.months[usr.months.length-1].date.getDay());
-        const daysRemaining = DiffInDays(usr.months[usr.months.length-1].date , nextDate);
+    User.findOne({_id:req.session.user} , (err , usr)=>{
+        const nextDate = new Date(usr.months[0].date.getFullYear() ,  usr.months[0].date.getMonth() +1  , usr.months[0].date.getDay());
+        const daysRemaining = DiffInDays(usr.months[0].date , nextDate);
         user = usr ;
         res.render("index.ejs" , {userName:usr.firstName + " " + usr.lastName,
                                   funds:usr.budget-usr.months[usr.months.length-1].totalDeposits,
@@ -67,35 +99,29 @@ app.get('/', (req, res)=>{
                                   totalDeposits:usr.months[usr.months.length-1].totalDeposits });
     })
 });
+
 app.post('/add-deposits' , (req, res)=>{
-    let lastValue ;
-    let i = 0;
-    while(user.months[user.months.length-1].categories[i].categoryName!=req.body.categorySelect){
-        i++;
-    }
-    lastValue = user.months[user.months.length-1].categories[i].CategoryDeposit;
-    console.log(req.body);
-    User.updateOne({},
-                   {$set:{"months.$[month].categories.$[category].CategoryDeposit":lastValue+parseInt(req.body.deposit),
-                          "months.$[month].totalDeposits":user.months[user.months.length-1].totalDeposits+parseInt(req.body.deposit)
+
+    User.updateOne({"months.id" : {$gte : 1}},
+                   {$inc:{"months.$.categories.$[category].CategoryDeposit":parseInt(req.body.deposit),
+                          "months.$.totalDeposits":parseInt(req.body.deposit)
                         } 
                     },
-                    {arrayFilters:[{'month.id' : 1 },{'category.categoryName' : req.body.categorySelect}]},
+                    {arrayFilters:[{'category.categoryName' : req.body.categorySelect}]},
                     (err)=>{
                                 if(!err){
-                                    console.log("updated succesfully");
+                                    //console.log("updated succesfully");
                                     res.redirect("/");
                                 }
                             
                                 else{
-                                    console.log(err);
                                     res.send("error");
+                                    throw err;
                                 }
                             });
                   
 });
 app.post('/' , (req, res)=>{
-    console.log(req.body);
     User.updateOne({} , { $push : {
                             "months.$[month].categories": { 
                                                             categoryName:req.body.newCategory,
@@ -112,6 +138,86 @@ app.post('/' , (req, res)=>{
             console.log(err);
         }
     })
+})
+
+app.get('/login' , loginRegisterMiddleware, (req, res)=>{
+    res.render('login.ejs' , {});
+})
+app.post('/login', (req, res)=>{
+    User.findOne({email:req.body.email} , (err, user)=>{
+        if(!user){
+            console.log("user not found");
+            res.redirect('/login');
+        }
+        else{
+            bcrypt.compare(req.body.password, user.password, function(err, result) {
+                if(!err){
+                    if(result){
+                        req.session.regenerate((err)=>{
+                            if(err){throw err;}
+                            else{
+                                req.session.isAuth = true;
+                                req.session.user = user._id;
+                                req.session.save((err)=>{
+                                    if(!err){
+                                        res.redirect("/");
+                                    }
+                                    else{
+                                        throw err;
+                                    }
+                                })
+                            }
+                        })
+                    }
+                    else{
+                        res.redirect("/login");
+                    }
+                }
+                else{
+                    throw err;
+                }
+            });
+        }
+    })
+})
+app.get('/register',loginRegisterMiddleware , (req, res)=>{
+    res.render('register.ejs' , {});
+})
+app.post('/register', (req, res)=>{
+    bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        const user = new User({
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
+            email: req.body.email,
+            password:hash,
+            categories: [],
+            budget:req.body.budget,
+            months:[
+                {
+                    id:1,
+                    date: new Date(),
+                    totalDeposits:0,
+                    categories:[]
+                }
+            ]
+        
+        });
+        console.log(user);
+        user.save((error)=>{
+            if(!error){
+                console.log("added user");
+                res.redirect("/login");
+            }
+            else{
+                throw error;
+            }
+        });
+    });
+})
+
+app.get("/logout" , (req, res)=>{
+    req.session.destroy();
+    res.redirect("/");
 })
 
 

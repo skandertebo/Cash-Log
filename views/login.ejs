@@ -1,0 +1,18 @@
+<%- include('./partials/header.ejs') %>
+<div class="main-container">
+    <form action="login" method="post">
+    <div class="login-register-box purple-text container">
+        <h1 style="margin-bottom:0.8em;">Login</h1>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Email</span>
+                <input autocomplete="off" type="email" class="form-control" placeholder="Insert your Email" aria-label="email" aria-describedby="basic-addon1" name="email">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Password</span>
+                <input autocomplete="off" type="password" class="form-control" placeholder="Insert your password" aria-label="password" aria-describedby="basic-addon1" name="password">
+            </div>
+            <button type="submit" class="btn btn-outline-danger mt-2">Log in</button>
+    </div>
+    </form>
+</div>
+<%- include('./partials/footer.ejs') %>
