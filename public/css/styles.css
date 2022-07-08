@@ -166,7 +166,7 @@ h1{
 .adding-value span{
     font-family:'ubuntu';
     font-weight:400;
-    font-size:20px;
+    font-size:1.25em;
     margin-right:6px;
 }
 .input-add-value{
@@ -275,7 +275,7 @@ input[type=radio]:checked {
 #total{
     font-weight: bold;
 }
-@media (max-width:500px) {
+@media (max-width:501px) {
     .container-l{
         height:var(--container-l-width);
         width:100%;
@@ -284,6 +284,13 @@ input[type=radio]:checked {
     .container-r{
         width:100%;
         position:static;
+    }
+    input::placeholder{
+        font-size:1em;
+    }
+    .adding-spendings > form {
+        padding-left:0.5rem;
+        padding-right:0.5rem;
     }
 
 }
