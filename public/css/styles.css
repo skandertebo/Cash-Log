@@ -276,10 +276,7 @@ input[type=radio]:checked {
     font-weight: bold;
 }
 @media only screen and (max-width:480px) {
-    body{
-        display:flex;
-        justify-self:center;
-    }
+
     .container-l{
         height:var(--container-l-width);
         width:100%;
@@ -288,6 +285,7 @@ input[type=radio]:checked {
     .container-r{
         width:100%;
         position:static;
+        padding:8px;
     }
     input::placeholder{
         font-size:1em;
