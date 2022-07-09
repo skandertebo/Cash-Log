@@ -2,15 +2,88 @@
 :root{
     --container-l-width:4.5em;
     --purple:#541690;
+    --darkPurple:#293462;
     --bg-primary:#FF4949;
     --bg-secondary:#FFCD38;
+}
+@keyframes slidein {
+    from {
+        transform: translateX(-50px)
+    }
+    to {
+        transform: translateX(0px)
+    }
 }
 body{
     background-color:var(--bg-primary);
     font-family:'ubuntu' , sans-serif;
 }
 h1{
-    font-size:32px
+    font-size:2em;
+}
+h6{
+    font-size:1em;
+}
+h6 a{
+    color:var(--purple);
+}
+.my-navbar a {
+    color:inherit !important;
+    text-decoration:none !important;
+}
+.my-navbar{
+    list-style-type:none;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4em;
+    padding:2em;
+    height:100%;
+    width:100%;
+}
+.my-nav-item:last-child{
+    margin-top: auto;
+    margin-bottom:0.6em;
+}
+#arrow i{
+    transform:rotate(-90deg);
+    transition:transform 800ms ease-in-out;
+}
+.my-nav-item {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:0.8em;
+}
+.my-nav-item a {
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:0.8em;
+    transition:color 300ms ease-in-out;
+}
+.my-nav-item a:hover{
+    color:white !important;
+}
+.container-l{
+    display:flex;
+    justify-content:center;
+    background-color:var(--purple);
+    height:100%;
+    position:fixed;
+    width:var(--container-l-width);
+    box-shadow: 6px -1px 6px 0px rgba(82,52,52,0.53);
+    -webkit-box-shadow: 6px -1px 6px 0px rgba(82,52,52,0.53);
+    -moz-box-shadow: 6px -1px 6px 0px rgba(82,52,52,0.53);
+    z-index:1;
+    transition: width 250ms ease-in-out;
+}
+.container-l span{
+    font-size:1.25em;
+    display:none;
 }
 .container{
     background-color:var(--bg-secondary);
@@ -68,25 +141,11 @@ h1{
 }
 .login-register-box .input-group span {
     background-color: rgba(255,255,255,0);
-    font-size:18px;
+    font-size:1.125em;
     border:none;
 }
 .container-main{
     width:100%;
-}
-.container-l{
-    background-color:var(--purple);
-    display:flex;
-    flex-direction:column;
-    height:100%;
-    position:fixed;
-    width:var(--container-l-width);
-    padding:2em;
-    align-items: center;
-    box-shadow: 6px -1px 6px 0px rgba(82,52,52,0.53);
-    -webkit-box-shadow: 6px -1px 6px 0px rgba(82,52,52,0.53);
-    -moz-box-shadow: 6px -1px 6px 0px rgba(82,52,52,0.53);
-    z-index:1;
 }
 .container-r{
     width: calc(100% - var(--container-l-width));
@@ -98,18 +157,18 @@ h1{
     align-items:center;
 }
 .main{
+    width:auto;
     text-align:center;
-    width:360px;
     display:flex;
     flex-direction:column;
     justify-content:center;
     background-color:var(--bg-secondary);
     border-radius:30px;
-    padding:5px;
+    padding:1em 4em;
     margin:6px;
 }
 .container-bottom{
-    margin-top:4em;
+    margin-top:1em;
     display:flex;
     flex-wrap:wrap;
     width:100%;
@@ -275,21 +334,48 @@ input[type=radio]:checked {
 #total{
     font-weight: bold;
 }
+@media only screen and (min-width:480px){
+    .container-l:hover .my-navbar{
+        padding-left:0.5em;
+        padding-right:0.5em;
+    }
+    .container-l:hover {
+        width:9em;
+    }
+    .container-l:hover #arrow i {
+        transform: rotate(810deg);
+    }
+    .container-l:hover span{
+        display:block;
+        animation: slidein 500ms ease-in-out;
+    }
+}
 @media only screen and (max-width:480px) {
 
     .container-l{
         height:var(--container-l-width);
         width:100%;
         bottom:0;
+        flex-direction:row;
+    }
+    .container-l .my-navbar{
+        flex-direction:row;
+        justify-content:space-evenly;
+    }
+    .container-l .my-navbar .my-nav-item:first-child{
+        display:none;
     }
     .container-r{
         width:100%;
         position:static;
-        padding:0px;
+        padding-left:0px;
+        padding-right:0px;
         margin-bottom:var(--container-l-width);
     }
+    .main{
+        padding:1em 2.7em;
+    }
     .container-bottom{
-        margin-top:1em;
         padding:1em;
         justify-content:center;
     }
@@ -302,6 +388,16 @@ input[type=radio]:checked {
     }
     .add-cat{
         gap:4px;
+    }
+    .login-register-box{
+        padding-left:1rem;
+        padding-right:1rem;
+    }
+    .main-container{
+        padding:0.5rem;
+    }
+    .login-register-box .input-group span {
+        font-size:1em;
     }
 
 }
@@ -327,3 +423,4 @@ input[type=radio]:checked {
         gap:10px;
     }
 }
+
