@@ -1,6 +1,6 @@
 <%- include('./partials/header.ejs') %>
 <div class="main-container">
-    <form action="login" method="post">
+    <form action="login" method="post" class="my-auto">
     <div class="login-register-box purple-text container">
         <h1 style="margin-bottom:0.8em;">Login</h1>
             <div class="input-group mb-3">
@@ -11,9 +11,22 @@
                 <span class="input-group-text" id="basic-addon1">Password</span>
                 <input autocomplete="off" type="password" class="form-control" placeholder="Insert your password" aria-label="password" aria-describedby="basic-addon1" name="password">
             </div>
-            <button type="submit" class="btn btn-outline-danger mt-2">Log in</button>
-            <h6 class="mx-1">already have an account? <a href="/register" id="signing">sign in now</a></h6>
+            <button type="submit" class="btn btn-outline-danger">Log in</button>
+            <h6 class="mx-1 mt-3">don't have an account? <a href="/register" id="signing">sign up now</a></h6>
     </div>
     </form>
+</div>
+<div class="footer" style="position:static !important; width:100%;">
+    <section class="author">
+        <p>Copyright 2022. All rights reserved.</p>
+        <p>Author: Skander Tebourbi</p>
+    </section>
+    <section class="contact">
+        <ul>
+            <li><a target="_blank" href="https://www.facebook.com/ra1vecs/" class="media"><i class="fa-brands fa-lg fa-facebook-square"></i></a></li>
+            <li><a target="_blank" href="https://www.instagram.com/skander.tebourbi/" class="media"><i class="fa-brands fa-lg fa-instagram"></i></a></li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/skander-tebourbi-a8152b222/" class="media"><i class="fa-brands fa-lg fa-linkedin"></i></a></li>
+        </ul>
+    </section>
 </div>
 <%- include('./partials/footer.ejs') %>

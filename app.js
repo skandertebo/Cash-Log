@@ -172,8 +172,9 @@ app.post('/' , (req, res)=>{
 })
 
 app.get('/login' , loginRegisterMiddleware, (req, res)=>{
-    res.render('login.ejs' , {});
+    res.render('login.ejs');
 })
+
 app.post('/login', (req, res)=>{
     User.findOne({email:req.body.email} , (err, user)=>{
         if(!user){

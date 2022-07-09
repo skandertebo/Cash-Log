@@ -102,11 +102,12 @@ h6 a{
     font-weight:900;
 }
 .main-container{
-    height:100vh;
-    width:100vw;
+    min-height:100vh;
+    width:100%;
     display:flex;
+    flex-direction: column;
     align-items: center;
-    justify-content:center;
+    justify-content: center;
 }
 .login-register-box{
     background-color: var(--bg-secondary);
@@ -403,7 +404,7 @@ input[type=radio]:checked {
     }
 
 }
-.footer-index{
+.footer{
     position:relative;
     bottom:-3rem;
     display:flex;
@@ -415,32 +416,39 @@ input[type=radio]:checked {
     align-items:center;
 }
 
-.footer-index p {
+.footer p {
     font-size:0.85em;
     margin:auto 0;
 }
-.footer-index .author{
+.footer .author{
     display:flex;
     flex-direction: column;
     justify-self:flex-start;
 }
-.footer-index .contact{
+.footer .contact{
     padding:0;
     margin-left:auto;
     margin-right:5%;
 }
-.footer-index .contact ul{
+.footer .contact ul{
     margin:auto;
     list-style-type:none;
     display:flex;
     justify-content:flex-start;
     align-items:center;
-    height:100%;
     gap:10px;
+    color:white;
 }
-.footer-index .media {
+.footer .media {
     color:inherit !important;
     text-decoration:none !important;
+}
+.footer li{
+    transform:scale(1);
+    transition:transform 200ms ease-in-out;
+}
+.footer li:hover{
+    transform:scale(1.2);
 }
 
 @media (max-width: 600px){
