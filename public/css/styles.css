@@ -14,14 +14,7 @@
         transform: translateX(0px)
     }
 }
-@keyframes slideinIcons {
-    from {
-        transform: translate(30px , -44px )
-    }
-    to {
-        transform: translate(0px , 0px)
-    }
-}
+
 body{
     background-color:var(--bg-primary);
     font-family:'ubuntu' , sans-serif;
@@ -46,7 +39,7 @@ h6 a{
     flex-direction:column;
     align-items:center;
     gap:4em;
-    padding:2em;
+    padding:2em 0em;
     height:100%;
     width:100%;
 }
@@ -60,6 +53,7 @@ h6 a{
 }
 .my-nav-item {
     width:100%;
+    height:1px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -343,10 +337,6 @@ input[type=radio]:checked {
     font-weight: bold;
 }
 @media only screen and (min-width:480px){
-    .container-l:hover .my-navbar{
-        padding-left:0.5em;
-        padding-right:0.5em;
-    }
     .container-l:hover {
         width:9em;
     }
@@ -355,10 +345,7 @@ input[type=radio]:checked {
     }
     .container-l:hover span{
         display:block;
-        animation: slidein 400ms 100ms ease-in-out;
-    }
-    .container-l:hover a i {
-        animation: slideinIcons 300ms ease-in-out;
+        animation: slidein 400ms ease-in-out;
     }
 }   
 @media only screen and (max-width:480px) {
