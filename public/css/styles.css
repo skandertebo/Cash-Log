@@ -14,6 +14,14 @@
         transform: translateX(0px)
     }
 }
+@keyframes slideinIcons {
+    from {
+        transform: translate(30px , -44px )
+    }
+    to {
+        transform: translate(0px , 0px)
+    }
+}
 body{
     background-color:var(--bg-primary);
     font-family:'ubuntu' , sans-serif;
@@ -347,9 +355,12 @@ input[type=radio]:checked {
     }
     .container-l:hover span{
         display:block;
-        animation: slidein 500ms ease-in-out;
+        animation: slidein 400ms 100ms ease-in-out;
     }
-}
+    .container-l:hover a i {
+        animation: slideinIcons 300ms ease-in-out;
+    }
+}   
 @media only screen and (max-width:480px) {
 
     .container-l{
