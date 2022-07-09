@@ -1,4 +1,7 @@
 let addCategoryBtn = document.getElementById("add-cat-btn");
+var xhr = new XMLHttpRequest();
+
+
 addCategoryBtn.addEventListener("click", ()=>{
     if(document.getElementById("add-cat").value!=''){
         let newCategory = document.createElement('div');
@@ -9,10 +12,13 @@ addCategoryBtn.addEventListener("click", ()=>{
         let newCategoryInOverview = document.createElement('li');
         newCategoryInOverview.setAttribute("class","list-group-item");
         newCategoryInOverview.setAttribute("style","background:none;");
-        newCategoryInOverview.textContent = document.getElementById("add-cat").value; +" : 0TND"
+        newCategoryInOverview.textContent = document.getElementById("add-cat").value +" : 0TND";
         document.getElementById('category-list-overview').appendChild(newCategoryInOverview);
-        document.getElementById('new-category').value = document.getElementById("add-cat").value ;
-        document.getElementById('addCategory').submit();
-        document.getElementById("add-cat").value = '';
+        xhr.open("POST", "/add-category", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            category:document.getElementById("add-cat").value
+        }));
+        document.getElementById("add-cat").value='';
     }
 })

@@ -48,7 +48,7 @@
             <div class="container-bottom-border"></div>
 
             <div class="adding-spendings flex-item container">
-                <form action="/add-deposits" method="post">
+                <form action="/" method="post" id="add-value-form">
                     <div class="adding-value">
                         <label for="add-funds" class="my-auto">Add Deposits:</label>
                         <div class="input-add-value">
@@ -68,13 +68,10 @@
                         </span>
                             <div class="add-cat mt-2">
                                 <input type="text" name="newCategory" placeholder="Add Category" id="add-cat" autocomplete="off"> 
-                                <button class="btn btn-ourline-danger" id="add-cat-btn">+</button>
+                                <button class="btn btn-ourline-danger" id="add-cat-btn" type="button">+</button>
                             </div>
-                        <button type="submit" class="btn btn-outline-danger mt-4">Save</button>
+                        <button type="submit" class="btn btn-outline-danger mt-4" id="save">Save</button>
                     </div>
-                </form>
-                <form action="/" method="post" id="addCategory" style="display:none;">
-                    <input type="hidden" name="newCategory" id="new-category" required>
                 </form>
             </div>
 
@@ -94,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <div class="footer-index">
+        <div class="footer">
             <section class="author">
                 <p>Copyright 2022. All rights reserved.</p>
                 <p>Author: Skander Tebourbi</p>

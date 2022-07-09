@@ -131,45 +131,50 @@ app.get('/', homeMiddleware , (req, res)=>{
     })
 });
 
-app.post('/add-deposits' , (req, res)=>{
-
-    User.updateOne({_id:req.session.user,"months.id" : {$gte : 1}},
-                   {$inc:{"months.$.categories.$[category].CategoryDeposit":parseInt(req.body.deposit),
-                          "months.$.totalDeposits":parseInt(req.body.deposit)
-                        } 
-                    },
-                    {arrayFilters:[{'category.categoryName' : req.body.categorySelect}]},
-                    (err)=>{
-                                if(!err){
-                                    //console.log("updated succesfully");
-                                    res.redirect("/");
-                                }
-                            
-                                else{
-                                    res.send("error");
-                                    throw err;
-                                }
-                            });
-                  
-});
 app.post('/' , (req, res)=>{
-    User.updateOne({_id:req.session.user} , { $push : {
-                            "months.$[month].categories": { 
-                                                            categoryName:req.body.newCategory,
-                                                            CategoryDeposit:0
-                            },
-                            categories:req.body.newCategory
-                        }
-    },
-    {arrayFilters:[{'month.id' : 1}]},
-    (err)=>{
-        if(!err){
-            console.log("categories updated successfully");
-        }else{
-            console.log(err);
+    console.log(req.body);
+        User.updateOne({_id:req.session.user,"months.id" : {$gte : 1}},
+                       {$inc:{"months.$.categories.$[category].CategoryDeposit":parseInt(req.body.deposit),
+                              "months.$.totalDeposits":parseInt(req.body.deposit)
+                            } 
+                        },
+                        {arrayFilters:[{'category.categoryName' : req.body.categorySelect}]},
+                        (err)=>{
+                                    if(!err){
+                                        res.redirect("/");
+                                    }
+                                
+                                    else{
+                                        res.send("error");
+                                        throw err;
+                                    }
+                                });
+    
+});
+
+app.post("/add-category" , (req, res)=>{
+    req.on('data' , (data)=>{
+        const newCategory = JSON.parse(data).category;
+        User.updateOne({_id:req.session.user} , { $push : {
+            "months.$[month].categories": { 
+                                            categoryName:newCategory,
+                                            CategoryDeposit:0
+            },
+            categories:newCategory
         }
+            },
+            {arrayFilters:[{'month.id' : 1}]},
+            (err)=>{
+                if(!err){
+                res.redirect("/");
+                }else{
+                console.log(err);
+                }
+        });
     })
-})
+
+});
+
 
 app.get('/login' , loginRegisterMiddleware, (req, res)=>{
     res.render('login.ejs');
