@@ -89,14 +89,45 @@ const loginRegisterMiddleware = (req, res, next) => {
 app.get('/', homeMiddleware , (req, res)=>{
     
     User.findOne({_id:req.session.user} , (err , usr)=>{
-        const nextDate = new Date(usr.months[0].date.getFullYear() ,  usr.months[0].date.getMonth() +1  , usr.months[0].date.getDay());
-        const daysRemaining = DiffInDays(usr.months[0].date , nextDate);
-        user = usr ;
+        const nextDate = new Date(usr.months[0].date);
+        nextDate.setMonth(nextDate.getMonth() + 1);
+        const today = new Date();
+        const daysRemaining = DiffInDays(nextDate, today);
+        if(daysRemaining<=0){
+            let month = {
+                id:usr.months.length+1,
+                date:today,
+                totalDeposits:0,
+                categories:[]
+            }
+            usr.categories.forEach((category)=>{
+                month.categories.push({
+                    categoryName:category,
+                    CategoryDeposit:0
+                })
+            })
+            User.updateOne(
+                {_id:req.session.user},
+                {$push:{
+                    months:{
+                        $each:[month],
+                        $position:0
+                    }
+                }},
+                (err)=>{
+                    if(err){
+                        throw err;
+                    }
+                    else{
+                        res.redirect("/")
+                    }
+            })
+        }
         res.render("index.ejs" , {userName:usr.firstName + " " + usr.lastName,
-                                  funds:usr.budget-usr.months[usr.months.length-1].totalDeposits,
+                                  funds:usr.budget-usr.months[0].totalDeposits,
                                   days : daysRemaining ,
-                                  categories: usr.months[usr.months.length-1].categories ,
-                                  totalDeposits:usr.months[usr.months.length-1].totalDeposits });
+                                  categories: usr.months[0].categories ,
+                                  totalDeposits:usr.months[0].totalDeposits });
     })
 });
 
