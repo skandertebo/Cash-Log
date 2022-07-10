@@ -1,3 +1,4 @@
+require("dotenv").config();
 const _ = require('lodash');
 const express = require('express');
 const path = require('path');
@@ -8,7 +9,7 @@ const mongodbSession = require('connect-mongodb-session')(session);
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const DiffInDays = require('./dateDiff.js');
-const uri = "mongodb+srv://skandertebo:galaxys41842002messi@cluster0.4a6gx.mongodb.net/?retryWrites=true&w=majority"
+const uri = process.env.URI;
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
 const app = express();
@@ -24,7 +25,7 @@ const store = new mongodbSession({
 
 
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   store : store
